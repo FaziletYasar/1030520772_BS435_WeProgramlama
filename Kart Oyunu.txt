@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>KART OYUNU</title>
+    <link rel="stylesheet" href="card.css"/>
+    <script src="card.js">
+        let firsMove = null;
+let gameOver = true;
+let fırstCard= 0;
+const indexs = [0, 1, 2];
+const astronaut = "image/ayı.pnp";
+const moon = "image/fil.pnp";
+const back = "image/mavi.pnp";
+
+function newGame(){
+    firsMove=null;
+    gameOver=false;
+    fırstCard= Math.floor(Math.random() * 3);
+    firstMessage();
+    backImage(0);
+    backImage(1);
+    backImage(2);
+
+}
+
+function selectedCard(index){
+    if(gameOver || index === firsMove){
+        return;
+    }
+    if(fırstCard === index){
+        showCard1(index);
+        endGame(true);
+    }
+    else{
+        if(!firsMove){
+            firsMove = index;
+            showCard2(index);
+        }else{
+            endGame(false);
+        }
+    }
+}
+function showCard1(index){
+    const img = document.getElementById("img"+index);
+    img.src = astronaut;
+    img.style.cursor = "default";
+}
+function showCard2(index){
+    const img = document.getElementById("img"+index);
+    img.src = moon;
+    img.style.cursor = "default";
+}
+function endGame(win){
+    gameOver=true;
+    for(let i=0; i<indexs.length; i++){
+        if(i === fırstCard){
+            showCard1(i);
+        }
+        else{
+            showCard2(i);
+        }
+    }
+    if(win){
+        winShow();
+    }else{
+        loseShow();
+    }
+}
+function winShow(){
+    allHide();
+    document.getElementById("winId").style.display="block";
+}
+function loseShow(){
+    allHide();
+    document.getElementById("loseId").style.display="block";
+}
+function firstMessage(){
+    allHide();
+    document.getElementById("firstId").style.display="block";
+}
+function allHide(){
+    document.getElementById("firstId").style.display="none";
+    document.getElementById("winId").style.display="none";
+    document.getElementById("loseId").style.display="none";
+}
+function backImage(index) {
+    const img = document.getElementById("pnp"+index);
+    img.src = back;
+    img
+    </script>
+</head>
+<style>
+    html, body {
+    margin: 0px;
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+    text-align: center;
+    font-size: 1.2em;
+}
+
+.card {
+    margin: 20px;
+    height: 300px;
+    border: 2px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.message{
+    background-color: rgb(10, 1, 129);
+    color: rgb(255, 255, 255);
+}
+
+.link{
+    color: rgb(255, 0, 0);
+    cursor: pointer;
+    text-decoration: underline;
+}
+</style>
+<body>
+
+<h2>KART BULMACA</h2>
+
+<p>
+    3 Karttan ikisini aynı tahmin ederseniz 2si aynı olursa kazandınız.
+</p>
+
+<img id="img0" class="card" src="image/mavi.pnp" onclick="selectedCard(0)">
+<img id="img1" class="card" src="image/mavi.pnp" onclick="selectedCard(1)">
+<img id="img2" class="card" src="image/mavi.pnp" onclick="selectedCard(2)">
+
+<div class="message">
+    <p id="firstId">Fili bulmak için kartın üzerine tıklamalısın.</p>
+    <p id="winId" style="display: none">kazandınız Tebrikler 
+        Yeni Oyun İçin Tıklayın.. <span onclick="newGame()" class="link">buraya</span> tıklayabilirsin.
+    </p>
+    <p id="loseId" style="display: none">Kaybettin :(
+        Yeni Oyun İçin Tıklayın.. <span onclick="newGame()" class="link">buraya</span> tıklayabilirsin.
+    </p>
+</div>
+
+<script>
+    newGame();
+</script>
+
+</body>
+</html>
